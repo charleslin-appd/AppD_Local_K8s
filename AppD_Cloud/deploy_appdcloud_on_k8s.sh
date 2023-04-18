@@ -26,6 +26,6 @@ helm install appdynamics-collectors appdynamics-cloud-helmcharts/appdynamics-col
 -f collectors-values.yaml \
 --set appdynamics-otel-collector.clientId=$APPD_CLOUD_CLIENT_ID \
 --set appdynamics-otel-collector.clientSecret=$APPD_CLOUD_CLIENT_SECRET \
---set global.clusterName=$USER
+--set global.clusterName=lab-cluster-$USER
 kubectl -n appdynamics get all
 say -v "Samantha" "appd cloud deployment completed"
