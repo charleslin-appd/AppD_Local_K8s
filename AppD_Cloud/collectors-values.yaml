@@ -10,7 +10,7 @@ appdynamics-otel-collector:
       logging:
         loglevel: debug
       otlp:
-        endpoint: "http://appd-csaas-opentelemetry-collector.appdynamics-ca.svc.cluster.local:4317"
+        endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
         tls:
           insecure: true
     processors:
