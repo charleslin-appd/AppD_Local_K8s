@@ -8,7 +8,8 @@ appdynamics-otel-collector:
   configOverride:
     exporters:
       logging:
-        loglevel: debug
+        #loglevel: debug	# loglevel is deprecated use verbosity instead
+        verbosity: detailed
       otlp:
         endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
         tls:
