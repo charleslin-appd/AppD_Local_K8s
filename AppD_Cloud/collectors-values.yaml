@@ -9,7 +9,7 @@ appdynamics-otel-collector:
     exporters:
       logging:
         #loglevel: debug	# loglevel is deprecated use verbosity instead
-        verbosity: detailed
+        verbosity: normal
       otlp:
         endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
         tls:
@@ -17,7 +17,7 @@ appdynamics-otel-collector:
     processors:
       batch:
         timeout: 30s
-        send_batch_size: 1000
+        send_batch_size: 100
     service:
       extensions: [health_check, oauth2client, zpages]
       pipelines:
