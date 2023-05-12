@@ -19,6 +19,8 @@ kubectl create namespace appdynamics
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/cert-manager.yaml
 sleep 90
 helm repo add appdynamics-cloud-helmcharts https://appdynamics.jfrog.io/artifactory/appdynamics-cloud-helmcharts/
+# Update to the latest chart
+helm repo update 
 helm install appdynamics-operators appdynamics-cloud-helmcharts/appdynamics-operators -n appdynamics --wait
 kubectl -n appdynamics get pods
 sleep 5
