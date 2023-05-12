@@ -53,15 +53,41 @@ appdynamics-cloud-k8s-monitoring:
         - condition:
             operator: contains
             key: kubernetes.pod.name
-            value: ad-service
+            value: ecom-ecommerce
           config: # new
             messageParser:
               log4J:
-                enabled: true
+                enabled: false
                 pattern: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} %n"
+              logback:
+                enabled: true
+                pattern: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - [%X{AD.requestGUID}] %msg trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} %n"
+            multiLinePattern: '^2023' # default is after
+            multiLineNegate: true # default is fal
             multiLineMatch: after
-            multiLinePattern: "^2022" # default is after
-            multiLineNegate: true # default is false
+        - condition:
+            operator: contains
+            key: kubernetes.pod.name
+            value: ecom-inventory
+        - condition:
+            operator: contains
+            key: kubernetes.pod.name
+            value: ecom-logistics
+        - condition:
+            operator: contains
+            key: kubernetes.pod.name
+            value: ecom-fulfillment
+          config: # new
+            messageParser:
+              log4J:
+                enabled: false
+                pattern: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} %n"
+              logback:
+                enabled: true
+                pattern: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - [%X{AD.requestGUID}] %msg trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} %n"
+            multiLinePattern: '^2023' # default is after
+            multiLineNegate: true # default is fal
+            multiLineMatch: after
       dropFields:
         [
           "agent",
