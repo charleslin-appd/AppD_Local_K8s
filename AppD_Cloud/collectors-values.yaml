@@ -10,10 +10,10 @@ appdynamics-otel-collector:
       logging:
         #loglevel: debug	# loglevel is deprecated use verbosity instead
         verbosity: normal
-      otlp:
-        endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
-        tls:
-          insecure: true
+      # otlp:
+       # endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
+       # tls:
+       #   insecure: true
     processors:
       batch:
         timeout: 30s
@@ -32,7 +32,7 @@ appdynamics-otel-collector:
         traces:
           receivers: [otlp]
           processors: [batch, memory_limiter]
-          exporters: [logging, otlphttp, otlp]
+          exporters: [logging, otlphttp]
   enablePrometheus: true
   spec:
     replicas: 1
