@@ -17,7 +17,7 @@ appdynamics-otel-collector:
     processors:
       batch:
         timeout: 30s
-        send_batch_size: 500
+        send_batch_size: 250
     service:
       extensions: [health_check, oauth2client]
       pipelines:
@@ -85,3 +85,12 @@ appdynamics-cloud-k8s-monitoring:
           "cloud",
         ]
       batchSize: 1000
+  #Daemonset specific configs
+  inframonPod:
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
