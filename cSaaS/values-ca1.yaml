@@ -1,0 +1,89 @@
+# To install Cluster Agent
+installClusterAgent: true
+installInfraViz: true
+
+# AppDynamics controller info
+controllerInfo:
+  url: https://se-lab.saas.appdynamics.com:443
+  account: se-lab
+  # see values-ca1-sensitive.yaml for the following additional settings
+  # username: <username>
+  # password: <password>
+  # accessKey: <accessKey>
+  # globalAccount: <globalAccountKey>  # To be provided when using machineAgent Window Image
+
+# Cluster agent config
+clusterAgent:
+  nsToMonitorRegex: .*
+  logLevel: "DEBUG"
+
+install:
+  metrics-server: true
+
+instrumentationConfig:
+  enabled: true
+  instrumentationMethod: Env
+  nsToInstrumentRegex: default|*-ad-ecommerce
+  appNameStrategy: namespace
+  # If no tier name is specified, deployment name is used
+  # tierNameStrategy: label
+  # tierNameLabel: io.kompose.service
+  imageInfo:
+    java:
+      image: appdynamics/java-agent:23.2.0
+      agentMountPath: /opt/appdynamics
+      imagePullPolicy: IfNotPresent
+    nodejs:
+      # use -16-stretch for nodejs 16 build
+      image: "appdynamics/nodejs-agent:22.11.0-16-stretch-slim"
+      agentMountPath: /opt/appdynamics
+      imagePullPolicy: IfNotPresent
+  instrumentationRules:
+    - labelMatch:
+        - framework: java
+      customAgentConfig: '-Dappdynamics.opentelemetry.enabled=true -Dotel.traces.exporter=otlp -Dotel.resource.attributes="service.name=$(OTEL_SERVICE_NAME),service.namespace=$(OTEL_K8S_NAMESPACE)" -Dotel.exporter.otlp.traces.endpoint=http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317'
+
+    # - labelMatch:
+    #     - framework: nodejs
+    #   language: nodejs
+    #   analyticsHost: analytics-agent.host.name
+    #   analyticsPort: 443
+    #   analyticsSslEnabled: true
+# InfraViz config
+infraViz:
+  nodeOS: "linux"
+  enableMasters: false
+  stdoutLogging: false
+  enableContainerHostId: true
+  enableServerViz: true
+  enableDockerViz: false
+
+# Netviz config
+netViz:
+  enabled: true
+  netVizPort: 3892
+
+# Agent pod specific properties, modified for smaller cluster
+agentPod:
+  nodeSelector: {}
+  tolerations: []
+  resources:
+    limits:
+      cpu: "1250m"
+      memory: "300Mi"
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+  labels: {}
+
+# Infraviz pod specific properties, modified for smaller cluster
+infravizPod:
+  nodeSelector:
+    kubernetes.io/os: linux
+  resources:
+    limits:
+      cpu: 500m
+      memory: "1G"
+    requests:
+      cpu: 100m
+      memory: "400M"
