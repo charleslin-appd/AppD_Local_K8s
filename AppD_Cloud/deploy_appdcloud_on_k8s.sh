@@ -15,19 +15,19 @@ elif [[ -z ${APPD_CLOUD_CLIENT_SECRET+x} ]]; then
 fi
 set -x #echo on
 cd "$(dirname "$0")"
-kubectl create namespace appdynamics
+kubectl create namespace cnao
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/cert-manager.yaml
 sleep 90
 helm repo add appdynamics-cloud-helmcharts https://appdynamics.jfrog.io/artifactory/appdynamics-cloud-helmcharts/
 # Update to the latest chart
 helm repo update 
-helm install appdynamics-operators appdynamics-cloud-helmcharts/appdynamics-operators -n appdynamics --wait
-kubectl -n appdynamics get pods
+helm install appdynamics-operators appdynamics-cloud-helmcharts/appdynamics-operators -n cnao --wait
+kubectl -n cnao get pods
 sleep 5
-helm install appdynamics-collectors appdynamics-cloud-helmcharts/appdynamics-collectors -n appdynamics \
+helm install appdynamics-collectors appdynamics-cloud-helmcharts/appdynamics-collectors -n cnao \
 -f collectors-values.yaml \
 --set appdynamics-otel-collector.clientId=$APPD_CLOUD_CLIENT_ID \
 --set appdynamics-otel-collector.clientSecret=$APPD_CLOUD_CLIENT_SECRET \
 --set global.clusterName=lab-cluster-$USER
-kubectl -n appdynamics get all
+kubectl -n cnao get all
 say -v "Samantha" "appd cloud deployment completed"
