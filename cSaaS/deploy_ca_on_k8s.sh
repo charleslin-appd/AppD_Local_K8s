@@ -22,6 +22,9 @@ fi
 set -x #echo on
 cd "$(dirname "$0")"
 kubectl create namespace appdynamics
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm upgrade --install metrics-server metrics-server/metrics-server --namespace=appdynamics \ 
+--set args={"--kubelet-insecure-tls=true"} 
 helm repo add appdynamics-charts https://ciscodevnet.github.io/appdynamics-charts
 # Update to the latest chart
 helm repo update 

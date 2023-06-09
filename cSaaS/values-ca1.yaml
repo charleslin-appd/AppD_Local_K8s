@@ -18,7 +18,7 @@ clusterAgent:
   logLevel: "DEBUG"
 
 install:
-  metrics-server: true
+  metrics-server: false
 
 instrumentationConfig:
   enabled: true
