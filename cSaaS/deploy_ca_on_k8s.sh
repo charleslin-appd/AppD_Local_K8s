@@ -28,7 +28,7 @@ helm upgrade --install metrics-server metrics-server/metrics-server --namespace=
 helm repo add appdynamics-charts https://ciscodevnet.github.io/appdynamics-charts
 # Update to the latest chart
 helm repo update 
-helm install appd-cluster-agent appdynamics-charts/cluster-agent --namespace=appdynamics \
+helm install $USER-ca appdynamics-charts/cluster-agent --namespace=appdynamics \
 -f values-ca1.yaml \
 --set controllerInfo.username=$APPD_CSAAS_USERNAME \
 --set controllerInfo.password=$APPD_CSAAS_PASSWORD \
