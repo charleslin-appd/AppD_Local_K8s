@@ -86,6 +86,14 @@ appdynamics-cloud-k8s-monitoring:
         ]
       batchSize: 1000
   #Daemonset specific configs
+  clustermonPod:
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
   inframonPod:
     resources:
       limits:
