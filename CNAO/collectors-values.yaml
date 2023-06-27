@@ -65,13 +65,13 @@ appdynamics-cloud-k8s-monitoring:
             messageParser:
               log4J:
                 enabled: false
-                pattern: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} %n"
+                pattern: "%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - [%X{AD.requestGUID}] [trace_id=%X{appd.trace.id} span_id=%X{appd.span.id} trace_flags=%X{trace_flags}] %msg %n"
               logback:
                 enabled: true
-                pattern: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - [%X{AD.requestGUID}] %msg trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} %n"
-            multiLinePattern: '^2023' # default is after
-            multiLineNegate: true # default is fal
+                pattern: "%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - [%X{AD.requestGUID}] [trace_id=%X{appd.trace.id} span_id=%X{appd.span.id} trace_flags=%X{trace_flags}] %msg %n"
             multiLineMatch: after
+            multiLinePattern: '^\d{4}-\d{2}-\d{2}' # default is after
+            multiLineNegate: true # default is false          
       dropFields:
         [
           "agent",
@@ -85,6 +85,7 @@ appdynamics-cloud-k8s-monitoring:
           "cloud",
         ]
       batchSize: 1000
+      maxBytes: 1000000
   #Daemonset specific configs
   clustermonPod:
     resources:
