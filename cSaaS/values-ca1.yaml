@@ -1,6 +1,6 @@
 # To install Cluster Agent
 installClusterAgent: true
-installInfraViz: true
+installInfraViz: false
 
 # AppDynamics controller info
 controllerInfo:
@@ -23,7 +23,7 @@ install:
 instrumentationConfig:
   enabled: true
   instrumentationMethod: Env
-  nsToInstrumentRegex: default|.+-ad-ecommerce
+  nsToInstrumentRegex: default|.+-ad-ecommerce$
   appNameStrategy: namespace
   # If no tier name is specified, deployment name is used
   # tierNameStrategy: label
