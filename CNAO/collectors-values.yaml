@@ -10,6 +10,7 @@ appdynamics-otel-collector:
       logging:
         #loglevel: debug	# loglevel is deprecated use verbosity instead
         verbosity: normal
+        # verbosity (default = normal): the verbosity of the logging export (detailed|normal|basic). When set to detailed, pipeline data is verbosely logged.
       # otlp:
        # endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
        # tls:
@@ -17,7 +18,7 @@ appdynamics-otel-collector:
     processors:
       batch:
         timeout: 30s
-        send_batch_size: 250
+        send_batch_size: 1000
     service:
       extensions: [health_check, oauth2client]
       pipelines:
