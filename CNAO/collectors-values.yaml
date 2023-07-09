@@ -12,9 +12,9 @@ appdynamics-otel-collector:
         verbosity: normal
         # verbosity (default = normal): the verbosity of the logging export (detailed|normal|basic). When set to detailed, pipeline data is verbosely logged.
       # otlp:
-       # endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
-       # tls:
-       #   insecure: true
+      # endpoint: "http://appdynamics-otel-collector-service.appdynamics.svc.cluster.local:4317"
+      # tls:
+      #   insecure: true
     processors:
       batch:
         timeout: 30s
@@ -43,7 +43,7 @@ appdynamics-otel-collector:
         memory: 1024Mi
       requests:
         cpu: 200m
-        memory: 512Mi    
+        memory: 512Mi
 appdynamics-cloud-k8s-monitoring:
   install:
     logCollector: true
@@ -72,7 +72,7 @@ appdynamics-cloud-k8s-monitoring:
                 pattern: "%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - [%X{AD.requestGUID}] [trace_id=%X{appd.trace.id} span_id=%X{appd.span.id} trace_flags=%X{trace_flags}] %msg %n"
             multiLineMatch: after
             multiLinePattern: '^\d{4}-\d{2}-\d{2}' # default is after
-            multiLineNegate: true # default is false          
+            multiLineNegate: true # default is false
       dropFields:
         [
           "agent",
@@ -104,3 +104,53 @@ appdynamics-cloud-k8s-monitoring:
       requests:
         cpu: 100m
         memory: 64Mi
+appdynamics-cloud-db-collector:
+  install:
+    dbCollector: true
+    dbMonitoringConfigs: true
+  appdCloudAuth:
+    #clientId: xxxxxxxxxxxxxx # use --set command line argument or a separate yaml file
+    #clientSecret: xxxxxxxxxxxxxx # use --set command line argument or a separate yaml file
+    endpoint: https://lab1.observe.appdynamics.com/data
+    tokenUrl: https://lab1.observe.appdynamics.com/auth/dfdbdf71-7322-44d0-85fb-36c69a7c3789/default/oauth2/token
+
+  # dbCollector Configs
+  dbCollectorConfig:
+    logLevel: info
+
+  # Each Object in the list will create a custom resource of dbconfig type
+  dbMonitoringConfigs:
+    - dbType: mysql
+      configName: ad-ecommerce-mysql
+      hostname: mysqldb.charleli-ad-ecommerce.svc.cluster.local
+      hostport: 3306
+      username: root
+      # password: use --set command line argument or a separate yaml file
+
+      # Uncomment the following field to specify the name of the secret containing the password instead of specifying the password in the above field
+      # passwordSecretName: <secret-name>
+
+      # Uncomment below field to specify the DbCollector this config needs to be assigned to
+      # Defaults to collector of current release <release-name>-appdynamics-db-collector and <release-namespace>
+      # dbCollector:
+      #   name: <parent-collector-name>
+      #   namespace: <parent-collector-namespace>
+
+      # Uncomment below field to specify environment (defaults to self-hosted)
+      # environment:
+      #   platform: self-hosted # Other possible properties "AWS", "Azure"
+
+      # Uncomment below field to monitor specific schema/view
+      # database: <database-name>
+      # Uncomment below fields to use TLS connection
+      # tlsConfig:
+      #   hostNameInCertificate: <hostname>
+      #   certSecretName: <secret-name>
+
+    # Uncomment below section to monitor more database(s)
+    # - dbType: <database-type>
+    #   configName : <config-name>
+    #   hostname: <hostname>
+    #   hostport: <port>
+    #   username: <user-name>
+    #   password: <password>

@@ -26,8 +26,11 @@ kubectl -n cnao get pods
 sleep 5
 helm install appdynamics-collectors appdynamics-cloud-helmcharts/appdynamics-collectors -n cnao \
 -f collectors-values.yaml \
+--set global.clusterName=lab-cluster-$USER
+--set appdynamics-cloud-db-collector.appdCloudAuth.clientId=$APPD_CLOUD_CLIENT_ID \
+--set appdynamics-cloud-db-collector.appdCloudAuth.clientSecret=$APPD_CLOUD_CLIENT_SECRET \
+--set appdynamics-cloud-db-collector.dbMonitoringConfigs[0].password=$MYSQL_ROOT_PASSWORD \
 --set appdynamics-otel-collector.clientId=$APPD_CLOUD_CLIENT_ID \
 --set appdynamics-otel-collector.clientSecret=$APPD_CLOUD_CLIENT_SECRET \
---set global.clusterName=lab-cluster-$USER
 kubectl -n cnao get all
 say -v "Samantha" "appd cloud deployment completed"
