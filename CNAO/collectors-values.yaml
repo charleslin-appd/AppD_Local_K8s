@@ -104,6 +104,14 @@ appdynamics-cloud-k8s-monitoring:
       requests:
         cpu: 100m
         memory: 64Mi
+  logCollectorPod:
+    resources:
+      limits:
+        cpu:     800m
+        memory:  512Mi
+      requests:
+        cpu:     200m
+        memory:  150Mi
 appdynamics-cloud-db-collector:
   install:
     dbCollector: true
