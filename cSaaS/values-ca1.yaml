@@ -40,7 +40,7 @@ instrumentationConfig:
       imagePullPolicy: IfNotPresent
   instrumentationRules:
     - language: java
-      customAgentConfig: '-Dappdynamics.opentelemetry.enabled=true -Dotel.traces.exporter=otlp -Dotel.resource.attributes="service.name=$(APPDYNAMICS_AGENT_TIER_NAME),service.namespace=$(APPDYNAMICS_AGENT_APPLICATION_NAME)" -Dotel.exporter.otlp.traces.endpoint=http://appdynamics-collectors-appdynamics-otel-co-collector.cnao.svc.cluster.local:4317'
+      customAgentConfig: '-Dappdynamics.opentelemetry.enabled=true -Dotel.traces.exporter=otlp -Dotel.metrics.exporter=otlp -Dotel.resource.attributes="service.name=$(APPDYNAMICS_AGENT_TIER_NAME),service.namespace=$(APPDYNAMICS_AGENT_APPLICATION_NAME)" -Dotel.exporter.otlp.traces.endpoint=http://appdynamics-collectors-appdynamics-otel-co-collector.cnao.svc.cluster.local:4317'
 
     # - labelMatch:
     #     - framework: nodejs
