@@ -30,7 +30,7 @@ instrumentationConfig:
   # tierNameLabel: io.kompose.service
   imageInfo:
     java:
-      image: appdynamics/java-agent:23.2.0
+      image: appdynamics/java-agent:23.6.0.34839
       agentMountPath: /opt/appdynamics
       imagePullPolicy: IfNotPresent
     nodejs:
@@ -40,7 +40,7 @@ instrumentationConfig:
       imagePullPolicy: IfNotPresent
   instrumentationRules:
     - language: java
-      customAgentConfig: '-Dappdynamics.opentelemetry.enabled=true -Dotel.traces.exporter=otlp -Dotel.metrics.exporter=otlp -Dotel.resource.attributes="service.name=$(APPDYNAMICS_AGENT_TIER_NAME),service.namespace=$(APPDYNAMICS_AGENT_APPLICATION_NAME)" -Dotel.exporter.otlp.traces.endpoint=http://appdynamics-collectors-appdynamics-otel-co-collector.cnao.svc.cluster.local:4317'
+      customAgentConfig: '-Dappdynamics.opentelemetry.enabled=true -Dotel.traces.exporter=otlp -Dotel.metrics.exporter=otlp -Dotel.resource.attributes="service.name=$(APPDYNAMICS_AGENT_TIER_NAME),service.namespace=$(APPDYNAMICS_AGENT_APPLICATION_NAME)" -Dotel.exporter.otlp.endpoint=http://appdynamics-otel-collector-service.cnao.svc.cluster.local:4317'
 
     # - labelMatch:
     #     - framework: nodejs
